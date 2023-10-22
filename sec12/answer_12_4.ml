@@ -537,3 +537,117 @@ let test3 =
       { kanji = "平和台"; kana = "へいわだい"; romaji = "heiwadai"; shozoku = "有楽町線" };
       { kanji = "和光市"; kana = "わこうし"; romaji = "wakousi"; shozoku = "有楽町線" };
     ]
+
+(* 目的 : ekimei_t 型のリストを受け取ったら、それをひらがなの順に整列し、
+   さらに駅の重複を取り除いた ekimei_t 型のリストを返す *)
+(* seiretsu : ekimei_t list -> ekimei_t list *)
+let rec seiretsu lst =
+  let sorted_list = hiragana_sort lst in
+  match sorted_list with
+  | [] -> []
+  | ({
+       kanji = first_kanji;
+       kana = first_kana;
+       romaji = first_romaji;
+       shozoku = first_shozoku;
+     } as first)
+    :: rest -> (
+      match rest with
+      | [] -> []
+      | {
+          kanji = rest_first_kanji;
+          kana = rest_first_kana;
+          romaji = rest_first_romaji;
+          shozoku = rest_first_shozoku;
+        }
+        :: rest_rest ->
+          if first_kana == rest_first_kana then first :: rest_rest
+          else first :: seiretsu rest)
+
+let test4 [] = []
+
+let test5
+    [
+      { kanji = "和光市"; kana = "わこうし"; romaji = "wakousi"; shozoku = "有楽町線" };
+      {
+        kanji = "営団成増";
+        kana = "えいだんなります";
+        romaji = "eidannarimasu";
+        shozoku = "有楽町線";
+      };
+      { kanji = "平和台"; kana = "へいわだい"; romaji = "heiwadai"; shozoku = "有楽町線" };
+      {
+        kanji = "営団赤塚";
+        kana = "えいだんあかつか";
+        romaji = "eidanakakuka";
+        shozoku = "有楽町線";
+      };
+    ] =
+  [
+    {
+      kanji = "営団赤塚";
+      kana = "えいだんあかつか";
+      romaji = "eidanakakuka";
+      shozoku = "有楽町線";
+    };
+    {
+      kanji = "営団成増";
+      kana = "えいだんなります";
+      romaji = "eidannarimasu";
+      shozoku = "有楽町線";
+    };
+    { kanji = "平和台"; kana = "へいわだい"; romaji = "heiwadai"; shozoku = "有楽町線" };
+    { kanji = "和光市"; kana = "わこうし"; romaji = "wakousi"; shozoku = "有楽町線" };
+  ]
+
+let test6
+    [
+      {
+        kanji = "営団赤塚";
+        kana = "えいだんあかつか";
+        romaji = "eidanakakuka";
+        shozoku = "有楽町線";
+      };
+      {
+        kanji = "営団赤塚";
+        kana = "えいだんあかつか";
+        romaji = "eidanakakuka";
+        shozoku = "有楽町線";
+      };
+      {
+        kanji = "営団赤塚";
+        kana = "えいだんあかつか";
+        romaji = "eidanakakuka";
+        shozoku = "有楽町線";
+      };
+      { kanji = "和光市"; kana = "わこうし"; romaji = "wakousi"; shozoku = "有楽町線" };
+      {
+        kanji = "営団成増";
+        kana = "えいだんなります";
+        romaji = "eidannarimasu";
+        shozoku = "有楽町線";
+      };
+      {
+        kanji = "営団成増";
+        kana = "えいだんなります";
+        romaji = "eidannarimasu";
+        shozoku = "有楽町線";
+      };
+      { kanji = "平和台"; kana = "へいわだい"; romaji = "heiwadai"; shozoku = "有楽町線" };
+    ] =
+  [
+    {
+      kanji = "営団赤塚";
+      kana = "えいだんあかつか";
+      romaji = "eidanakakuka";
+      shozoku = "有楽町線";
+    };
+    {
+      kanji = "営団成増";
+      kana = "えいだんなります";
+      romaji = "eidannarimasu";
+      shozoku = "有楽町線";
+    };
+    { kanji = "平和台"; kana = "へいわだい"; romaji = "heiwadai"; shozoku = "有楽町線" };
+    { kanji = "和光市"; kana = "わこうし"; romaji = "wakousi"; shozoku = "有楽町線" };
+  ]
