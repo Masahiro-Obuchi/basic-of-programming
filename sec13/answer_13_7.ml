@@ -232,7 +232,7 @@ let rec get_ekikan_kyori eki1 eki2 lst =
 
 (* 目的 : 直前に確定した駅 (eki_t型) と未確定の駅 (eki_t型) を受け取ったら、
    pとqが直接繋がっているかどうかを調べ、繋がっていたらqの最短距離と手前リスト
-   を必要に応じて更新したもの、繋がっていなかったらもとの1をそのまま返す *)
+   を必要に応じて更新したもの、繋がっていなかったらもとのqをそのまま返す *)
 (* koushin1 : eki_t -> eki_t -> eki_t *)
 let koushin1 p q = match (p, q) with
 ({namae = pn; saitan_kyori = ps; temae_list = pt},
