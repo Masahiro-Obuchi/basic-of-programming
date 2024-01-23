@@ -21,7 +21,6 @@ let test5 = concat [ "テンプレート"; "の"; "複合"; "データ" ] = "テ
 
 (* 目的 : 文字列のリスト lst を受け取ったら、その中の要素を前から順に全部くっつけた関数を返す ford_right を使って書き直す *)
 (* concat : string list -> string *)
-
 let concat_fold_right lst = List.fold_right (^) lst ""
 
 (* テスト *)
