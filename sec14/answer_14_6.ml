@@ -6,7 +6,7 @@ let rec count lst seiseki0 = match lst with [] -> 0 | {namae = n; tensuu = t; se
 
 (* 目的 : count を filter と length を用いて定義する *)
 (* count_filter_length : gakusei_t list -> string -> int *)
-let count_filter_length lst seiseki0 = let count_filter gakusei = match gakusei with {namae = n; tensuu = t; seiseki = s} -> s = seiseki0 in List.length (List.filter count_filter lst)
+let count_filter_length lst seiseki0 = let is_seiseki0 gakusei = match gakusei with {namae = n; tensuu = t; seiseki = s} -> s = seiseki0 in List.length (List.filter is_seiseki0 lst)
 
 (* テスト *)
 let test1 = count_filter_length [] "A" = 0
