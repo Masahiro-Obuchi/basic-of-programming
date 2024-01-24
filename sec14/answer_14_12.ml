@@ -516,3 +516,11 @@ let shokika_map eki_lst kiten = List.map(fun eki -> match eki with
       if namae_ = kiten then { namae = namae_; saitan_kyori = 0.; temae_list = [ namae_ ] }
       else eki) eki_lst
 
+(* 目的 : make_eki_list とshokika を一度にやってしまう make_initial_elo_list 
+   を map と名前のない関数を使って作る *)
+(* make_initial_eki_list : ekimei_t list -> eki_t -> eki_t list *)
+let make_initial_eki_list ekimei_lst kiten = List.map(fun ekimei -> match ekimei with
+  | { kanji = kanji_; kana = kana_; romaji = romaji_; shozoku = shozoku_ } ->
+      if kanji_ = kiten then { namae = kanji_; saitan_kyori = 0.; temae_list = [ kanji_ ] }
+      else { namae = kanji_; saitan_kyori = infinity; temae_list = [] }) ekimei_lst
+

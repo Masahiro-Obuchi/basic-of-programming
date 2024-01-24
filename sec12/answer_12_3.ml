@@ -488,12 +488,13 @@ let result = make_eki_list global_ekimei_list
 (* 目的 : eki_t 型のリストと起点（漢字の文字列）を受け取ったら、
    起点のみ saitan_kyoriが0、temae_list　は始点の駅名のみからなるリスト
    （eki_t list）を返す *)
-(* shokika : eki_t -> eki_t *)
-let rec shokika eki_lst =
+(* shokika : eki_t list -> eki_t -> eki_t *)
+let rec shokika eki_lst kiten =
   match eki_lst with
   | [] -> []
-  | { namae = namae_; saitan_kyori = kyori_; temae_list = temae_ } :: rest ->
-      { namae = namae_; saitan_kyori = 0.; temae_list = [ namae_ ] }
-      :: shokika rest (* shokika rest *)
+  | { namae = namae_; saitan_kyori = kyori_; temae_list = temae_ } as first :: rest ->
+  if namae_ = kiten then { namae = namae_; saitan_kyori = 0.; temae_list = [ namae_ ] } :: shokika rest kiten
+  else first :: shokika rest kiten (* shokika rest kiten *)
 
-let answer_12_3_result = shokika result
+let kiten = "池袋"
+let answer_12_3_result = shokika result kiten
